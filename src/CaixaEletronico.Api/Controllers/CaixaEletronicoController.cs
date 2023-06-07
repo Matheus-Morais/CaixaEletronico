@@ -12,7 +12,7 @@ public class CaixaEletronicoController : Controller
     private Conta conta;
     private int id = 0;
 
-    [HttpPost]
+    [HttpPost("depositar")]
 
     public IActionResult Depositar(float valor)
     {
@@ -34,7 +34,7 @@ public class CaixaEletronicoController : Controller
         return Ok($"Valor depositado: {valor}");
     }
 
-    [HttpPost]
+    [HttpPost("sacar")]
 
     public IActionResult Sacar(float valor)
     {
@@ -42,7 +42,6 @@ public class CaixaEletronicoController : Controller
         if (valor > conta.Saldo) return BadRequest("Valor não permitido. Valor desejado é maior que seu saldo");
 
         var saque = new Registro();
-
         string tipo = "Saque";
 
         saque.Id = id++;
@@ -57,16 +56,16 @@ public class CaixaEletronicoController : Controller
         return Ok($"Valor do saque: {valor}");
     }
 
-    [HttpGet]
+    [HttpGet("extrato")]
 
     public IActionResult Extrato() 
     {
-        return View();
+        return Ok(_registros);
     }
 
-    [HttpGet] 
+    [HttpGet("saldo")] 
     public IActionResult Saldo() 
     {
-        return View();
+        return Ok($"Saldo: {conta.Saldo}");
     }
 }
