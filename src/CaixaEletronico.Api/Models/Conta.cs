@@ -16,4 +16,10 @@ public class Conta
 
         Saldo += valor;
     }
+
+    public void Saque(double valor)
+    {
+        if (valor <= 0) return;
+        Saldo -= valor;
+    }
 }

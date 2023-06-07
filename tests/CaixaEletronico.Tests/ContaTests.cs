@@ -52,4 +52,17 @@ public class ContaTests
 
         Assert.Equal(saldo, conta.Saldo);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void SaqueConta_SaqueMaiorIgualZero(double valor)
+    {
+        var conta = new Conta();
+        var saldo = conta.Saldo;
+
+        conta.Saque(valor);
+
+        Assert.Equal(saldo, conta.Saldo);
+    }
 }
