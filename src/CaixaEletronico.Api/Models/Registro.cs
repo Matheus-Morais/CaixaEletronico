@@ -3,7 +3,7 @@
 public class Registro
 {
     public int Id { get; set; }
-    public DateTime data { get; set; }
+    public DateTime Data { get; set; }
     public string Tipo { get; set; }
-    public float valor { get; set; }
+    public double Valor { get; set; }
 }
