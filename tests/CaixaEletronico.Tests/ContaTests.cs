@@ -30,7 +30,15 @@ public class ContaTests
     }
 
     [Fact]
-    public void DepositoConta() 
+    public void IniciarConta_Extrato()
+    {
+        var conta = new Conta();
+
+        Assert.Empty(conta.Extrato);
+    }
+
+    [Fact]
+    public void DepositoConta()
     {
         var conta = new Conta();
 
@@ -64,5 +72,29 @@ public class ContaTests
         conta.Saque(valor);
 
         Assert.Equal(saldo, conta.Saldo);
+    }
+
+    [Theory]
+    [InlineData(2000)]
+    public void SaqueConta_SaqueMaiorQueSaldo(double valor)
+    {
+        var conta = new Conta(1000);
+        var saldo = conta.Saldo;
+
+        conta.Saque(valor);
+
+        Assert.Equal(saldo, conta.Saldo);
+    }
+
+    [Theory]
+    [InlineData(1000)]
+    [InlineData(600)]
+    public void RegistroMovimentacao_Deposito(double valor)
+    {
+        var conta = new Conta();
+
+        conta.Deposito(valor);
+
+        Assert.NotEmpty(conta.Extrato);
     }
 }
