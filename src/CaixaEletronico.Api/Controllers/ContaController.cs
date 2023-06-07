@@ -35,24 +35,24 @@ public class ContaController : Controller
     }
 
     [HttpPost("sacar")]
-    public IActionResult Sacar(float valor)
+    public IActionResult Sacar([FromBody] ValorViewModel model)
     {
-        if (valor < 1) return BadRequest("Valor não permitido. Saques permitidos a partir de R$1.00");
-        if (valor > conta.Saldo) return BadRequest("Valor não permitido. Valor desejado é maior que seu saldo");
+        if (model.Valor < 1) return BadRequest("Valor não permitido. Saques permitidos a partir de R$1.00");
+        if (model.Valor > conta.Saldo) return BadRequest("Valor não permitido. Valor desejado é maior que seu saldo");
 
         var saque = new Registro();
         string tipo = "Saque";
 
         saque.Id = id++;
         saque.Tipo = tipo;
-        saque.Valor = valor;
+        saque.Valor = model.Valor;
         saque.Data = DateTime.Now;
 
-        conta.Saldo -= valor;
+        conta.Saldo -= model.Valor;
 
         _registros.Add(saque);
 
-        return Ok($"Valor do saque: {valor}");
+        return Ok($"Valor do saque: {model.Valor}");
     }
 
     [HttpGet("extrato")]
