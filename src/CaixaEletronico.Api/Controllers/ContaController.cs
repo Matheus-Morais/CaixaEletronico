@@ -8,30 +8,20 @@ namespace CaixaEletronico.Api.Controllers;
 [Route("v1/conta")]
 public class ContaController : Controller
 {
-
     private List<Registro> _registros = new List<Registro>();
-    private Conta conta = new Conta();
+    private Conta conta;
     private int id = 0;
+
+    public ContaController()
+    {
+        conta = new Conta();
+    }
 
     [HttpPost("depositar")]
     public IActionResult Depositar([FromBody] ValorViewModel model)
     {
-        if (model.Valor < 0.1) return BadRequest("Valor não permitido. Deposite um valor entre R$0.10 e R$1000.00");
-
-        var deposito = new Registro();
-
-        string tipo = "Depósito";
-
-        deposito.Id = id++;
-        deposito.Tipo = tipo;
-        deposito.Valor = model.Valor;
-        deposito.Data = DateTime.Now;
-
-        conta.Saldo += model.Valor;
-
-        _registros.Add(deposito);
-
-        return Ok($"Valor depositado: {model.Valor}");
+        conta.Deposito(model.Valor);
+        return Ok(conta.Saldo);
     }
 
     [HttpPost("sacar")]
