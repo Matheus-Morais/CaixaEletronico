@@ -50,6 +50,8 @@ public class CaixaEletronicoController : Controller
         saque.valor = valor;
         saque.data = DateTime.Now;
 
+        conta.Saldo -= valor;
+
         _registros.Add(saque);
 
         return Ok($"Valor do saque: {valor}");
