@@ -8,36 +8,36 @@ namespace CaixaEletronico.Api.Controllers;
 [Route("v1/conta")]
 public class ContaController : Controller
 {
-    private Conta conta;
+    private readonly IConta _conta;
 
-    public ContaController()
+    public ContaController(IConta conta)
     {
-        conta = new Conta();
+        _conta = conta;
     }
 
     [HttpPost("depositar")]
     public IActionResult Depositar([FromBody] ValorViewModel model)
     {
-        conta.Deposito(model.Valor);
-        return Ok(conta.Saldo);
+        _conta.Deposito(model.Valor);
+        return Ok(_conta.Saldo);
     }
 
     [HttpPost("sacar")]
     public IActionResult Sacar([FromBody] ValorViewModel model)
     {
-        conta.Saque(model.Valor);
-        return Ok(conta.Saldo);
+        _conta.Saque(model.Valor);
+        return Ok(_conta.Saldo);
     }
 
     [HttpGet("extrato")]
     public IActionResult Extrato()
     {
-        return Ok(conta.Extrato);
+        return Ok(_conta.Extrato);
     }
 
     [HttpGet("saldo")]
     public IActionResult Saldo()
     {
-        return Ok($"Saldo: {conta.Saldo}");
+        return Ok($"Saldo: {_conta.Saldo}");
     }
 }
