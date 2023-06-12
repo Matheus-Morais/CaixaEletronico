@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IConta, Conta>();
+builder.Services.AddSingleton<IConta, Conta>();
 
 var app = builder.Build();
 
